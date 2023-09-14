@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Scan
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,21 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Scan</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <app-explore-container name="Tab 1 page">
+    <div style="text-align: center; margin:auto;" *ngIf="!photo">
+      <ion-button (click)="takePicture" shape="round">Take a photo</ion-button>
+      <ion-button (click)="uploadPicture" shape="round">Upload a photo</ion-button>
+    </div>
+  
+    <div *ngIf="photo" id="board2" style="width: 90%; padding: 10px; margin: auto;"></div>
+  
+    <div *ngIf="photo" style="padding: 10px; margin: auto;">
+      <ion-button (click)="save()" shape="round">Save</ion-button>
+      <ion-button (click)="analyze()" hape="round">Save and Analyze</ion-button>
+    </div>
+  </app-explore-container>
 </ion-content>
