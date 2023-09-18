@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Toast } from '@capacitor/toast';
 import { Preferences } from '@capacitor/preferences';
 import { Camera, CameraResultType } from '@capacitor/camera';
+import { CapacitorHttp, HttpResponse } from '@capacitor/core';
+import {decode} from "base64-arraybuffer";
+import axios from 'axios';
 
 declare var Chessboard: any;
 
@@ -14,6 +17,7 @@ declare var Chessboard: any;
 export class Tab1Page {
   private board2: any
   photo: any = false
+  image : any
 
   constructor() { 
 
@@ -58,7 +62,7 @@ export class Tab1Page {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
-      resultType: CameraResultType.Uri
+      resultType: CameraResultType.Base64
     });
     
       // image.webPath will contain a path that can be set as an image src.
@@ -66,8 +70,9 @@ export class Tab1Page {
       // passed to the Filesystem API to read the raw data of the image,
       // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
 
-      var imageUrl = image.webPath;
-      console.log(imageUrl)
+      this.image = image;
+
+      await this.doPost(this.image);
     
       // Can be set to the src of an image now
       //imageElement.src = imageUrl;
@@ -77,25 +82,31 @@ export class Tab1Page {
     
   }
 
-  async curl() {
-    const url = 'http://api.deepai.org/api/fast-style-transfer';
-    const headers = new HttpHeaders()
-      .set('accept', 'application/json')
-      .set('api-key', 'myKey');
+  async doPost(image: any) {
+    const blob = new Blob([new Uint8Array(decode(image.base64String))], {
+      type: `image/${image.format}`,
+  });
   
-    let requestBody = new FormData();
-  
-    requestBody.append('content', 'https://www.dmarge.com/cdn-cgi/image/width=1200,quality=85,fit=scale-down,format=auto/https://www.dmarge.com/wp-content/uploads/2021/01/dwayne-the-rock-.jpg');
-    requestBody.append('style', 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/starry-night-print-by-vincent-van-gogh-vincent-van-gogh.jpg');
-  
-    const resp = await this.http.post(url, requestBody, {
-      headers: headers
-    }).toPromise().then();
-  
-    console.log(resp);
-  }
+    const form = new FormData();
+    console.log(image)
+    form.append("photo", blob, 'image.jpg');
+    form.append("corner", "BL")
 
-
+  
+    try {
+      const response = await axios.post('http://ec2-3-79-108-149.eu-central-1.compute.amazonaws.com:8080/home', form, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log(response.data);
+    } catch (error) {
+      
+    }
+  
+    // or...
+    // const response = await CapacitorHttp.request({ ...options, method: 'POST' })
+  };
 
 
 }
