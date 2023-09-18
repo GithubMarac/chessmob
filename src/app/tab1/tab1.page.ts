@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ToastController } from '@ionic/angular';
-import { StorageService } from '../storage.service';
+import { Toast } from '@capacitor/toast';
+import { Preferences } from '@capacitor/preferences';
 import { Camera, CameraResultType } from '@capacitor/camera';
 
 declare var Chessboard: any;
@@ -13,15 +13,10 @@ declare var Chessboard: any;
 })
 export class Tab1Page {
   private board2: any
-  photo: any
+  photo: any = false
 
-  constructor(private toastController: ToastController,
-              private storageService: StorageService) { 
+  constructor() { 
 
-  }
-
-  ngOnInit() {
-    
   }
 
   ionViewDidEnter() {
@@ -38,48 +33,66 @@ export class Tab1Page {
 
   async save() {
     let date = new Date();
-    this.storageService.set(date.toISOString(), this.board2.fen());
-    const toast = await this.toastController.create({
-      message: "Position is saved.",
-      duration: 2000,
-      position: 'bottom',
+    await Preferences.set({
+      key: date.toISOString(),
+      value: this.board2.fen()
     });
 
-    await toast.present();
+    await Toast.show({
+      text: 'Hello!',
+    });
+
+
   }
 
 
   async analyze() {
-    const toast = await this.toastController.create({
-      message: this.board2.fen(),
-      duration: 2000,
-      position: 'bottom',
+    await Toast.show({
+      text: 'Hello!',
     });
-
-    await toast.present();
   }
 
-  takePicture(){
-    this.photo = async () => {
-      const image = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: false,
-        resultType: CameraResultType.Uri
-      });
+  async takePicture(){
+    const permissions = await Camera.requestPermissions();
+
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Uri
+    });
     
       // image.webPath will contain a path that can be set as an image src.
       // You can access the original file using image.path, which can be
       // passed to the Filesystem API to read the raw data of the image,
       // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+
       var imageUrl = image.webPath;
+      console.log(imageUrl)
     
       // Can be set to the src of an image now
       //imageElement.src = imageUrl;
-    };
   }
 
   uploadPicture(){
     
+  }
+
+  async curl() {
+    const url = 'http://api.deepai.org/api/fast-style-transfer';
+    const headers = new HttpHeaders()
+      .set('accept', 'application/json')
+      .set('api-key', 'myKey');
+  
+    let requestBody = new FormData();
+  
+    requestBody.append('content', 'https://www.dmarge.com/cdn-cgi/image/width=1200,quality=85,fit=scale-down,format=auto/https://www.dmarge.com/wp-content/uploads/2021/01/dwayne-the-rock-.jpg');
+    requestBody.append('style', 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/starry-night-print-by-vincent-van-gogh-vincent-van-gogh.jpg');
+  
+    const resp = await this.http.post(url, requestBody, {
+      headers: headers
+    }).toPromise().then();
+  
+    console.log(resp);
   }
 
 
