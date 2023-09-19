@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Scan Board
+      Edit Board
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,17 +9,16 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Scan Board</ion-title>
+      <ion-title size="large">Edit Board</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div style="text-align: center; margin:auto; margin-top: 75%" *ngIf="!photo">
-    <ion-button (click)="takePicture()" shape="round">Take a photo</ion-button>
-  </div>
+  <div id="board2" style="width: 90%; padding: 10px; margin: auto; margin-top: 15px;"></div>
 
-  <div *ngIf="photo" id="board2" style="width: 90%; padding: 10px; margin: auto;"></div>
+  <ion-checkbox id="white" labelPlacement="start">White to play</ion-checkbox>
+  <ion-checkbox id="black" labelPlacement="end">Black to play</ion-checkbox>
 
-  <div *ngIf="photo" style="padding: 10px; margin: auto;">
+  <div style="padding: 10px; margin: auto; text-align: center;">
     <div id="board2" style="width: 90%"></div>
     <ion-button (click)="save()" shape="round">Save</ion-button>
     <ion-button (click)="analyze()" hape="round">Save and Analyze</ion-button>

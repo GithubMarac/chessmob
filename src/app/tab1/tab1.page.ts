@@ -3,7 +3,9 @@ import { Toast } from '@capacitor/toast';
 import { Preferences } from '@capacitor/preferences';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { CapacitorHttp, HttpResponse } from '@capacitor/core';
+import { LoadingController } from '@ionic/angular';
 import {decode} from "base64-arraybuffer";
+import { Router } from '@angular/router';
 import axios from 'axios';
 
 declare var Chessboard: any;
@@ -17,17 +19,18 @@ declare var Chessboard: any;
 export class Tab1Page {
   private board2: any
   photo: any = false
+  position: any = ''
   image : any
 
-  constructor() { 
+  constructor(private loadingCtrl: LoadingController,
+              private router: Router) { 
 
   }
 
   ionViewDidEnter() {
     if(this.photo){
-      var ruyLopez = 'r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R'
       this.board2 = Chessboard('board2', {
-        position: ruyLopez,
+        position: this.position,
         draggable: true,
         dropOffBoard: 'trash',
         sparePieces: true
@@ -94,12 +97,20 @@ export class Tab1Page {
 
   
     try {
+      const loading = await this.loadingCtrl.create({
+        message: 'Uploading photo, please wait...'
+      });
+
+      loading.present();
       const response = await axios.post('http://ec2-3-79-108-149.eu-central-1.compute.amazonaws.com:8080/home', form, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       console.log(response.data);
+      loading.dismiss();
+      this.router.navigate(['/edit', response.data]);
+
     } catch (error) {
       
     }

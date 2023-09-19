@@ -23,7 +23,7 @@
               {
                 "glob": "**/*",
                 "input": "src/assets",
-                "output": "assets"
+                "output": ""
               },
               {
                 "glob": "**/*.svg",
