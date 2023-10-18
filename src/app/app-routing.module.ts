@@ -11,7 +11,7 @@ const routes: Routes = [
     loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
   },
   {
-    path: 'analyze',
+    path: 'analyze/:fen',
     loadChildren: () => import('./analyze/analyze.module').then( m => m.AnalyzePageModule)
   }
 ];

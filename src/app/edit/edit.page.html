@@ -15,8 +15,15 @@
 
   <div id="board2" style="width: 90%; padding: 10px; margin: auto; margin-top: 15px;"></div>
 
-  <ion-checkbox id="white" labelPlacement="start">White to play</ion-checkbox>
-  <ion-checkbox id="black" labelPlacement="end">Black to play</ion-checkbox>
+  <ion-list>
+    <ion-item>
+      <ion-select #chess (ionChange)="onSelect(chess.value)" placeholder="Select chess color">
+        <div slot="label">To move? <ion-text color="danger">(Required)</ion-text></div>
+        <ion-select-option value="white">White</ion-select-option>
+        <ion-select-option value="black">Black</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 
   <div style="padding: 10px; margin: auto; text-align: center;">
     <div id="board2" style="width: 90%"></div>

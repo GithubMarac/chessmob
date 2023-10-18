@@ -17,6 +17,7 @@ export class EditPage implements OnInit {
   photo: any = false
   position: any = ''
   image : any
+  selectedColor: string = ''
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -39,6 +40,9 @@ export class EditPage implements OnInit {
   }
 
   async save() {
+    if(this.toPlay() == false){
+      return;
+    }
     let date = new Date();
     Preferences.set({
       key: date.toISOString(),
@@ -58,6 +62,12 @@ export class EditPage implements OnInit {
 
 
   async analyze() {
+    if(this.toPlay() == false){
+      return;
+    }
+    let fen2 = this.selectedColor == "white" ? "_w" : "_b";
+    console.log("test");
+    console.log(fen2);
     let date = new Date();
     Preferences.set({
       key: date.toISOString(),
@@ -73,10 +83,24 @@ export class EditPage implements OnInit {
         duration: 'short'
       });
     });
+    console.log(this.board2.fen() + fen2);
 
-    this.router.navigate(['/edit', this.board2.position]);
+    this.router.navigate(['/analyze', this.board2.fen() + fen2.toString()]);
   }
 
+  toPlay() : boolean {
+    if(this.selectedColor == ''){
+      Toast.show({
+        text: 'Please choose who plays next move!',
+        duration: 'short'
+      });
+      return false;
+    }
+    return true;
+  }
 
+	onSelect(value:string): void {
+		this.selectedColor = value;
+	}
 
 }
