@@ -25,8 +25,8 @@ export class AnalyzePage implements OnInit {
    console.log(this.analyze_url);
   }
 
-  async openCapacitorSiteasync (){
-    await Browser.open({ url: this.analyze_url });
+  async openCapacitorSiteasync(){
+    await Browser.open({ url: this.analyze_url, windowName: '_system' });
   };
   
 
