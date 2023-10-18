@@ -38,27 +38,6 @@ export class Tab1Page {
     }
   }
 
-  async save() {
-    let date = new Date();
-    await Preferences.set({
-      key: date.toISOString(),
-      value: this.board2.fen()
-    });
-
-    await Toast.show({
-      text: 'Hello!',
-    });
-
-
-  }
-
-
-  async analyze() {
-    await Toast.show({
-      text: 'Hello!',
-    });
-  }
-
   async takePicture(){
     const permissions = await Camera.requestPermissions();
 

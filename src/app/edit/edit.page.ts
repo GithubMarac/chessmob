@@ -43,6 +43,7 @@ export class EditPage implements OnInit {
     if(this.toPlay() == false){
       return;
     }
+    let fen2 = this.selectedColor == "white" ? "_w" : "_b";
     let date = new Date();
     Preferences.set({
       key: date.toISOString(),
@@ -66,23 +67,6 @@ export class EditPage implements OnInit {
       return;
     }
     let fen2 = this.selectedColor == "white" ? "_w" : "_b";
-    console.log("test");
-    console.log(fen2);
-    let date = new Date();
-    Preferences.set({
-      key: date.toISOString(),
-      value: this.board2.fen()
-    }).then(() => {
-      Toast.show({
-        text: 'Your board has been saved to gallery!',
-        duration: 'short'
-      });
-    }).catch((err) => {
-      Toast.show({
-        text: 'An error has occurred!',
-        duration: 'short'
-      });
-    });
     console.log(this.board2.fen() + fen2);
 
     this.router.navigate(['/analyze', this.board2.fen() + fen2.toString()]);

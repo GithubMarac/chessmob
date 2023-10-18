@@ -13,6 +13,14 @@
     </ion-toolbar>
   </ion-header>
 
+  <div style="text-align: center; margin:auto; margin-top: 5%" >
+    <h2>Usage</h2>
+    <p>This AI model is trained on 5 different chess boards and pieces</p>
+    <p>Ideal angle of picture is 45°</p>
+    <p>Beware of lighing reflection</p>
+    <p>You have 10 free usages left</p>
+  </div>
+
   <div style="text-align: center; margin:auto; margin-top: 75%" *ngIf="!photo">
     <ion-button (click)="takePicture()" shape="round">Take a photo</ion-button>
   </div>
