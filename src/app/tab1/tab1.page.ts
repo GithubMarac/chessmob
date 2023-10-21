@@ -21,6 +21,7 @@ export class Tab1Page {
   photo: any = false
   position: any = ''
   image : any
+  a1corner: string = ''
 
   constructor(private loadingCtrl: LoadingController,
               private router: Router) { 
@@ -72,7 +73,8 @@ export class Tab1Page {
     const form = new FormData();
     console.log(image)
     form.append("photo", blob, 'image.jpg');
-    form.append("corner", "BL")
+
+    form.append("corner", this.a1corner)
 
   
     try {
@@ -97,6 +99,10 @@ export class Tab1Page {
     // or...
     // const response = await CapacitorHttp.request({ ...options, method: 'POST' })
   };
+
+  onSelect(value:string): void {
+		this.a1corner = value;
+	}
 
 
 }

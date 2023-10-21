@@ -21,6 +21,21 @@
     <p>You have 10 free usages left</p>
   </div>
 
+  <div style="text-align: center; margin:auto; margin-top: 5%" >
+    <h2>Choose where is A1 corner located</h2>
+
+    <ion-item>
+      <ion-select #corner (ionChange)="onSelect(corner.value)" label="A1 Corner" label-placement="fixed" placeholder="A1 Corner">
+        <ion-select-option value="BL">Bottom left</ion-select-option>
+        <ion-select-option value="BR">Bottom right</ion-select-option>
+        <ion-select-option value="TL">Top left</ion-select-option>
+        <ion-select-option value="TR">Top right</ion-select-option>
+      </ion-select>
+    </ion-item>
+    
+  </div>
+
+
   <div style="text-align: center; margin:auto; margin-top: 75%" *ngIf="!photo">
     <ion-button (click)="takePicture()" shape="round">Take a photo</ion-button>
   </div>

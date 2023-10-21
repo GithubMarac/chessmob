@@ -1,5 +1,5 @@
 {
-  "name": "chessmob2",
+  "name": "ChessMob",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -36,6 +36,7 @@
     "@ionic/pwa-elements": "^3.2.2",
     "axios": "^1.5.0",
     "base64-arraybuffer": "^1.0.2",
+    "cordova-plugin-purchase": "^13.8.6",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
