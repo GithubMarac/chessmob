@@ -33,6 +33,7 @@
     "@capacitor/status-bar": "5.0.6",
     "@capacitor/toast": "^5.0.6",
     "@ionic/angular": "^7.0.0",
+    "@ionic/cli": "^7.1.1",
     "@ionic/pwa-elements": "^3.2.2",
     "axios": "^1.5.0",
     "base64-arraybuffer": "^1.0.2",
